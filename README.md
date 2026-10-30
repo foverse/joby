@@ -1,42 +1,117 @@
 # Joby
 
-Joby adapts one anonymized English Base CV to a job description. It records a versioned snapshot of the text, shows literal keyword overlap and gaps, and keeps the Base CV separate from tailored outputs.
+A resume tailoring engine, keyword overlap analyzer, and application pipeline tracker.
 
-## Run locally
+- Repository: [https://github.com/foverse/joby](https://github.com/foverse/joby)
+- Author: [Fouad Sennouni](https://growthmaker.fr) ([@foverse](https://github.com/foverse))
+- Project Hub: [growthmaker.fr](https://growthmaker.fr)
 
-Start the UI:
+---
 
-```powershell
-npm.cmd install
-npm.cmd run dev -- --host 127.0.0.1
+## Overview
+
+Joby adapts a structured Base CV to specific job postings while preserving data integrity. Instead of rewriting experience from scratch, it evaluates keyword coverage, surfaces skill gaps, and generates targeted, single-page outputs without modifying the original baseline.
+
+The application includes an integrated job application CRM to log outreach, set follow-up dates, and maintain application records.
+
+---
+
+## Key Features
+
+### 1. Resume Tailoring Engine
+- Immutable Base CV: Keeps your master profile intact while versioning role-specific customizations.
+- Versioned Job Snapshots: Captures job description text and hashes to compare iterations over time.
+- Literal Keyword Analysis: Flags exact keyword matches, missing terminology, and language requirements.
+
+### 2. PDF Rendering
+- Single-page layout enforcement with real-time visual height limits.
+- Server-side headless export powered by Puppeteer for exact print rendering.
+- Native browser print stylesheet fallback.
+
+### 3. Application Pipeline Tracker
+- Kanban and list view for active applications, interviews, offers, and rejections.
+- Follow-up date reminders and contact history logging.
+- One-click JSON backup export to protect application data.
+
+### 4. Flexible Storage Layer
+- Local Mode: Operates completely offline using browser `localStorage` with zero setup required.
+- PostgreSQL Mode: Connects to any standard PostgreSQL database (e.g. Aiven, Supabase, Neon) to persist snapshots and tailoring runs across devices.
+
+---
+
+## Tech Stack
+
+- **Frontend:** Vanilla JavaScript, Vite, Modern CSS
+- **Backend:** Node.js, Express 5
+- **Export Engine:** Puppeteer (Headless Chrome)
+- **Database:** PostgreSQL (`pg` pool with TLS support)
+
+---
+
+## Quick Start
+
+### 1. Clone and Install
+
+```bash
+git clone https://github.com/foverse/joby.git
+cd joby
+npm install
 ```
 
-Start the API server in a second terminal on port 3017:
+### 2. Start the Application
 
-```powershell
-$env:PORT = "3017"
-npm.cmd run start
+Open two terminal tabs:
+
+**Terminal 1 (Vite Dev Server):**
+```bash
+npm run dev
 ```
 
-Open the local Vite URL shown in the first terminal. The API proxy target is `127.0.0.1:3017` in Vite development; deployed builds use same-origin API routes.
+**Terminal 2 (API & PDF Export Server):**
+```bash
+# Linux/macOS
+PORT=3017 npm start
 
-## Optional Aiven PostgreSQL
-
-Set `AIVEN_DATABASE_URL` (or `DATABASE_URL`) on the API server to an Aiven PostgreSQL connection string, then restart the server. Joby creates tables for the single Base CV, job snapshots, and tailoring runs. The API verifies TLS certificates. Without this setting, the app uses browser localStorage and labels the data layer as local.
-
-The app does not fetch job pages: paste the public job description and capture a snapshot to track changes. The supplied role is a recorded demo scenario. Keyword overlap is a text comparison, not an ATS or hiring prediction.
-
-## Production build
-
-```powershell
-npm.cmd run build
-npm.cmd run start
+# Windows PowerShell
+$env:PORT = "3017"; npm start
 ```
 
-The service uses the `PORT` environment variable when the host provides one.
+Open the Vite local address (e.g. `http://localhost:5173`) in your browser.
 
-## Application follow-ups
+---
 
-Open **Applications** to add a company and role, update status, schedule a follow-up, and record contact history. Search by company or role and filter to due follow-ups. Drafts are editable and copied for manual sending. Joby does not send messages or background reminders.
+## Environment Configuration
 
-This feature stores records in this browser under `joby-applications-v1`, independently from the legacy server tracker. Use **Export backup** to download your records before clearing browser storage. These records are not included in Git commits or synchronized across devices.
+Configuration is optional. By default, Joby runs with zero configuration in local browser storage mode.
+
+| Variable | Description | Default |
+| :--- | :--- | :--- |
+| `PORT` | API server listening port | `3016` |
+| `DATABASE_URL` | PostgreSQL connection string with SSL | None (uses `localStorage`) |
+| `AIVEN_DATABASE_URL` | Alternative alias for PostgreSQL connection | None |
+
+When a database connection string is provided, Joby automatically creates the required tables (`joby_base_cv`, `joby_job_snapshots`, and `joby_tailoring_runs`).
+
+---
+
+## Project Structure
+
+```
+joby/
+├── index.html                  # Main application interface
+├── app.js                      # Core state management and tailoring engine
+├── applications.js             # Application pipeline CRM and follow-up tracker
+├── server.js                   # Express server, Puppeteer PDF generator, and DB layer
+├── style.css                   # Core styling and print media rules
+├── joby-design.css             # Component styling
+├── public/                     # Static assets and icons
+└── package.json                # Project dependencies and run scripts
+```
+
+---
+
+## Author
+
+Developed by [Fouad Sennouni](https://growthmaker.fr).
+
+Explore more tools, case studies, and experiments at [growthmaker.fr](https://growthmaker.fr).
