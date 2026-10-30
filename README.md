@@ -1,9 +1,9 @@
-# Joby
+﻿# Joby
 
 A resume tailoring engine, keyword overlap analyzer, and application pipeline tracker.
 
 - Repository: [https://github.com/foverse/joby](https://github.com/foverse/joby)
-- Author: [Fouad Sennouni](https://growthmaker.fr) ([@foverse](https://github.com/foverse))
+- Author: [Fouad](https://growthmaker.fr) ([@foverse](https://github.com/foverse))
 - Project Hub: [growthmaker.fr](https://growthmaker.fr)
 
 ---
@@ -98,20 +98,20 @@ When a database connection string is provided, Joby automatically creates the re
 
 ```
 joby/
-├── index.html                  # Main application interface
-├── app.js                      # Core state management and tailoring engine
-├── applications.js             # Application pipeline CRM and follow-up tracker
-├── server.js                   # Express server, Puppeteer PDF generator, and DB layer
-├── style.css                   # Core styling and print media rules
-├── joby-design.css             # Component styling
-├── public/                     # Static assets and icons
-└── package.json                # Project dependencies and run scripts
+â”œâ”€â”€ index.html                  # Main application interface
+â”œâ”€â”€ app.js                      # Core state management and tailoring engine
+â”œâ”€â”€ applications.js             # Application pipeline CRM and follow-up tracker
+â”œâ”€â”€ server.js                   # Express server, Puppeteer PDF generator, and DB layer
+â”œâ”€â”€ style.css                   # Core styling and print media rules
+â”œâ”€â”€ joby-design.css             # Component styling
+â”œâ”€â”€ public/                     # Static assets and icons
+â””â”€â”€ package.json                # Project dependencies and run scripts
 ```
 
 ---
 
 ## Author
 
-Developed by [Fouad Sennouni](https://growthmaker.fr).
+Developed by [Fouad](https://growthmaker.fr).
 
 Explore more tools, case studies, and experiments at [growthmaker.fr](https://growthmaker.fr).
